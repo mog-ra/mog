@@ -1,565 +1,533 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>合同会社MOG | 小さな会社の、大きな味方。</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            scroll-behavior: smooth;
-        }
+import React, { useState, useEffect } from 'react';
+import { 
+  Menu, X, Check, Clock, Shield, Coins, Bolt, Handshake, 
+  ArrowRight, Mail, Phone, MapPin, ChevronRight, MessageSquare, 
+  Users, Briefcase, Layout, Search, Zap, Star, Quote, Settings, 
+  BarChart, Globe, Smartphone, Lock
+} from 'lucide-react';
 
-        .primary-gradient {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
+const App = () => {
+  const [activePage, setActivePage] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-        /* ヒーローセクション専用の背景オーバーレイ */
-        #hero-section {
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 1s ease-in-out;
-        }
+  // ページ遷移時にトップへスクロール
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activePage]);
 
-        #hero-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 30%, rgba(15, 23, 42, 0.4) 100%);
-            z-index: 1;
-        }
+  // ナビゲーションコンポーネント
+  const Navigation = () => (
+    <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-20 items-center">
+          <div className="flex flex-col cursor-pointer" onClick={() => setActivePage('home')}>
+            <span className="text-2xl font-black text-blue-600 tracking-tighter">MOG LLC</span>
+            <span className="text-[10px] text-slate-500 font-bold -mt-1 tracking-widest">合同会社MOG</span>
+          </div>
+          
+          <div className="hidden md:flex items-center space-x-6 font-bold text-sm">
+            <button onClick={() => setActivePage('home')} className={`transition ${activePage === 'home' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>ホーム</button>
+            <button onClick={() => setActivePage('dx-detail')} className={`transition ${activePage === 'dx-detail' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>バックオフィスDX</button>
+            <button onClick={() => setActivePage('web-detail')} className={`transition ${activePage === 'web-detail' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>WEB制作</button>
+            <button onClick={() => {
+              setActivePage('home');
+              setTimeout(() => {
+                document.getElementById('voice')?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }} className="text-slate-600 hover:text-blue-600">導入事例</button>
+            <button onClick={() => {
+              document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+            }} className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-200">お問い合わせ</button>
+          </div>
 
-        .accent-gradient {
-            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
-        }
-
-        .plan-card {
-            transition: all 0.3s ease;
-        }
-
-        .plan-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .badge-popular {
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            background: #ef4444;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: bold;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 画像生成エリアの装飾 */
-        .img-gen-container {
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-            min-height: 200px;
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border-left-color: #3b82f6;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .generated-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        /* ヒーロー内ローダー */
-        #hero-loader {
-            position: absolute;
-            right: 10%;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 2;
-        }
-
-        .voice-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            border: 1px solid #e2e8f0;
-            height: 100%;
-        }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-900">
-
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex flex-col">
-                    <span class="text-2xl font-black text-blue-600 tracking-tighter">MOG LLC</span>
-                    <span class="text-[10px] text-slate-500 font-bold -mt-1 tracking-widest">合同会社MOG</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-6 font-bold text-sm">
-                    <a href="#about" class="text-slate-600 hover:text-blue-600 transition">コンセプト</a>
-                    <a href="#dx" class="text-slate-600 hover:text-blue-600 transition">バックオフィスDX</a>
-                    <a href="#web" class="text-slate-600 hover:text-blue-600 transition">WEB制作</a>
-                    <a href="#voice" class="text-slate-600 hover:text-blue-600 transition">導入事例</a>
-                    <a href="#faq" class="text-slate-600 hover:text-blue-600 transition">FAQ</a>
-                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-200">お問い合わせ</a>
-                </div>
-            </div>
+          <div className="md:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-600">
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
+      </div>
+      
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-b border-slate-200 p-4 space-y-4 font-bold flex flex-col">
+          <button onClick={() => { setActivePage('home'); setIsMenuOpen(false); }} className="text-left py-2">ホーム</button>
+          <button onClick={() => { setActivePage('dx-detail'); setIsMenuOpen(false); }} className="text-left py-2">バックオフィスDX</button>
+          <button onClick={() => { setActivePage('web-detail'); setIsMenuOpen(false); }} className="text-left py-2">WEB制作</button>
+          <button onClick={() => { setIsMenuOpen(false); document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-blue-600 text-white px-6 py-3 rounded-lg text-center">お問い合わせ</button>
+        </div>
+      )}
     </nav>
+  );
 
-    <!-- Hero Section -->
-    <section id="hero-section" class="min-h-screen flex items-center pt-20 primary-gradient text-white overflow-hidden" 
-             data-prompt="High quality professional photography of a Japanese office with blurred background, warm wooden textures and modern tech, aesthetic Japanese business environment, soft natural lighting, panoramic view">
-        
-        <div id="hero-loader" class="flex flex-col items-center gap-3">
-            <div class="loading-spinner"></div>
-            <span class="text-xs text-blue-300 font-bold tracking-widest">DESIGNING...</span>
+  const Footer = () => (
+    <footer className="bg-slate-900 text-white py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-4xl font-black mb-8 leading-tight">小さな会社の、<br />IT事務局になりたい。</h2>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400">
+                  <Phone size={20} />
+                </div>
+                <span className="text-xl font-bold">070-1047-1625</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400">
+                  <Mail size={20} />
+                </div>
+                <span className="text-xl font-bold">llc.mog@outlook.jp</span>
+              </div>
+            </div>
+          </div>
+          <div id="contact-form" className="bg-white p-8 rounded-[2rem] text-slate-900 shadow-2xl">
+            <h3 className="text-xl font-black mb-6">無料相談・お見積り</h3>
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition" placeholder="お名前" />
+                <input type="text" className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition" placeholder="会社名" />
+              </div>
+              <input type="email" className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition" placeholder="メールアドレス" />
+              <textarea className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition h-32" placeholder="ご相談内容（例：DX導入を検討中、HPを新しくしたい等）"></textarea>
+              <button className="w-full bg-blue-600 text-white font-black py-4 rounded-xl hover:bg-blue-700 transition shadow-xl shadow-blue-200">
+                送信する
+              </button>
+            </form>
+          </div>
         </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="lg:w-2/3">
-                <div class="inline-block bg-blue-600 text-xs font-bold px-3 py-1 rounded-full mb-6 tracking-wider animate-bounce">従業員30人未満の企業に特化</div>
-                <h1 class="text-5xl md:text-7xl font-black mb-8 leading-[1.1]">
-                    小さな会社の、<br><span class="text-blue-400 font-black">大きな味方。</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed font-light max-w-xl">
-                    本当に必要なDXを、圧倒的に低価格・短納期で。<br>
-                    面倒なバックオフィス業務を自動化し、<br class="hidden md:block">経営に集中できる時間を創ります。
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#bundle" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-500 transition shadow-2xl shadow-blue-900/40 text-center w-full sm:w-auto">
-                        まるっとDXパックを見る
-                    </a>
-                    <a href="#dx" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition text-center w-full sm:w-auto">
-                        サービス一覧
-                    </a>
-                </div>
-            </div>
+        <div className="mt-20 pt-8 border-t border-white/5 text-slate-500 text-xs flex flex-col md:flex-row justify-between gap-4 text-center">
+          <p>&copy; 2026 合同会社MOG All rights reserved. 静岡県から全国へ。</p>
+          <div className="space-x-6">
+            <button className="hover:text-white transition">プライバシーポリシー</button>
+            <button className="hover:text-white transition">特定商取引法に基づく表記</button>
+          </div>
         </div>
-    </section>
-
-    <!-- Concept Section -->
-    <section id="about" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-blue-600 font-bold mb-2 tracking-widest uppercase">Concept</h2>
-                <p class="text-3xl md:text-4xl font-black text-slate-900">選ばれる3つの理由</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="text-center reveal">
-                    <div class="w-20 h-20 accent-gradient text-white flex items-center justify-center rounded-3xl mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-coins text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">圧倒的な低価格</h3>
-                    <p class="text-slate-600 leading-relaxed">小規模企業に不要な機能を削ぎ落とし、実用的なパッケージに絞ることで業界最安級を実現しました。</p>
-                </div>
-                <div class="text-center reveal" style="transition-delay: 100ms;">
-                    <div class="w-20 h-20 accent-gradient text-white flex items-center justify-center rounded-3xl mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-bolt text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">爆速・最短納品</h3>
-                    <p class="text-slate-600 leading-relaxed">標準化された導入フローにより、最短10営業日からの稼働が可能。お待たせすることなくDXをスタートできます。</p>
-                </div>
-                <div class="text-center reveal" style="transition-delay: 200ms;">
-                    <div class="w-20 h-20 accent-gradient text-white flex items-center justify-center rounded-3xl mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-handshake text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">設定も運用も丸投げ</h3>
-                    <p class="text-slate-600 leading-relaxed">ITに詳しくなくても大丈夫。初期設定から運用まで、私たちがお客様の「事務局」としてサポートします。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DX Package Section -->
-    <section id="dx" class="py-24 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-end justify-between mb-12 reveal">
-                <div>
-                    <h2 class="text-blue-600 font-bold mb-2 uppercase tracking-widest">Back Office DX</h2>
-                    <p class="text-3xl md:text-4xl font-black text-slate-900">ラクチン事務局</p>
-                    <p class="mt-4 text-slate-600 italic">勤怠・給与・会計を、これ一つで解決</p>
-                </div>
-                <div class="mt-6 md:mt-0 bg-white px-6 py-3 rounded-full border border-slate-200 text-sm font-bold text-slate-500">
-                    従業員30人まで追加料金なし
-                </div>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl border border-slate-200 plan-card">
-                    <h3 class="text-xl font-bold mb-2">ライトプラン</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">9,800</span><span class="text-sm font-bold ml-1">円/月〜</span>
-                        <p class="text-slate-400 text-xs mt-1">初期費用：50,000円</p>
-                    </div>
-                    <ul class="space-y-4 mb-10 text-slate-600 text-sm">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> 勤怠管理システム導入</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> クラウド給与計算連携</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> チャットサポート無制限</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-xl border-2 border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition">詳細を見る</button>
-                </div>
-
-                <div class="bg-white p-8 rounded-3xl border-4 border-blue-600 plan-card relative shadow-2xl">
-                    <div class="badge-popular">一番人気</div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600">スタンダードプラン</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">14,800</span><span class="text-sm font-bold ml-1 text-blue-600">円/月〜</span>
-                        <p class="text-slate-400 text-xs mt-1">初期費用：80,000円</p>
-                    </div>
-                    <ul class="space-y-4 mb-10 text-slate-700 font-medium text-sm">
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> ライトプラン全機能</li>
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> クラウド会計システム</li>
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> 毎月30分の個別面談</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition">詳細を見る</button>
-                </div>
-
-                <div class="bg-white p-8 rounded-3xl border border-slate-200 plan-card">
-                    <h3 class="text-xl font-bold mb-2">プレミアムプラン</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">19,800</span><span class="text-sm font-bold ml-1">円/月〜</span>
-                        <p class="text-slate-400 text-xs mt-1">初期費用：100,000円</p>
-                    </div>
-                    <ul class="space-y-4 mb-10 text-slate-600 text-sm">
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> スタンダード全機能</li>
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> 電子契約システム導入</li>
-                        <li><i class="fas fa-check text-blue-600 mr-2"></i> 年末調整フルサポート</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-xl border-2 border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition">詳細を見る</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WEB Production Section -->
-    <section id="web" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-blue-600 font-bold mb-2 uppercase tracking-widest text-center">Web Production</h2>
-            <p class="text-3xl md:text-4xl font-black text-slate-900 text-center mb-16">すぐホームページ</p>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group reveal">
-                    <div class="img-gen-container aspect-video mb-6 overflow-hidden" data-prompt="Modern minimalist corporate website for Japanese tech company, blue accents, clean white background, professional UIUX design">
-                        <div class="loading-spinner"></div>
-                        <img src="" class="generated-img">
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">シンプル 5P</h3>
-                    <p class="text-2xl font-black mb-4 text-blue-600">148,000<span class="text-sm">円</span></p>
-                    <p class="text-slate-500 text-sm leading-relaxed">まずは名刺代わりに。スマホ対応・SEO対策済み。</p>
-                </div>
-                <div class="group reveal" style="transition-delay: 100ms;">
-                    <div class="img-gen-container aspect-video mb-6 overflow-hidden" data-prompt="Creative portfolio website for a Japanese design studio, artistic layout, sophisticated Japanese aesthetics, high-end web design">
-                        <div class="loading-spinner"></div>
-                        <img src="" class="generated-img">
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">スタンダード 10P</h3>
-                    <p class="text-2xl font-black mb-4 text-blue-600">248,000<span class="text-sm">円</span></p>
-                    <p class="text-slate-500 text-sm leading-relaxed">ブログ機能やSNS連携で集客を開始。一番選ばれるプランです。</p>
-                </div>
-                <div class="group reveal" style="transition-delay: 200ms;">
-                    <div class="img-gen-container aspect-video mb-6 overflow-hidden" data-prompt="Analytics dashboard interface for a Japanese marketing agency, data visualization, professional business software look">
-                        <div class="loading-spinner"></div>
-                        <img src="" class="generated-img">
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">集客特化 15P</h3>
-                    <p class="text-2xl font-black mb-4 text-blue-600">398,000<span class="text-sm">円</span></p>
-                    <p class="text-slate-500 text-sm leading-relaxed">MEO対策とGoogle広告運用代行がセット。成果にこだわります。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Voice Section (New) -->
-    <section id="voice" class="py-24 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-blue-600 font-bold mb-2 uppercase tracking-widest text-center">Voice</h2>
-            <p class="text-3xl md:text-4xl font-black text-slate-900 text-center mb-16">導入企業様の声</p>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 1: Manufacturing -->
-                <div class="voice-card reveal">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese male manufacturing company CEO in a workshop, friendly face, professional, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">精密機械製造 A社様</p>
-                            <p class="text-xs text-slate-500">代表取締役 K.M様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「紙の勤怠管理から脱却でき、給与計算のミスがゼロになりました。設定を丸投げできたのが最大の決め手です。」
-                    </p>
-                </div>
-
-                <!-- 2: Retail -->
-                <div class="voice-card reveal" style="transition-delay: 100ms;">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese female shop owner in a stylish boutique, smiling, professional, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">セレクトショップ B店様</p>
-                            <p class="text-xs text-slate-500">店長 S.H様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「ホームページ制作をお願いしましたが、10日で公開できて驚きました。スマホで見やすく、新規のお客様が増えています。」
-                    </p>
-                </div>
-
-                <!-- 3: Construction -->
-                <div class="voice-card reveal" style="transition-delay: 200ms;">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese male construction company manager, professional, confident, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">建設・リフォーム C社様</p>
-                            <p class="text-xs text-slate-500">専務理事 T.O様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「経費精算がスマホで完結し、現場から会社に戻る手間がなくなりました。月額1万円以下でこの変化は素晴らしいです。」
-                    </p>
-                </div>
-
-                <!-- 4: IT Service -->
-                <div class="voice-card reveal">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese male IT consultant in a modern office, intelligent look, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">ITソリューション D社様</p>
-                            <p class="text-xs text-slate-500">代表 Y.A様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「バックオフィスをMOGさんに任せることで、本業のコンサルティングに集中できる時間が増え、売上が20%向上しました。」
-                    </p>
-                </div>
-
-                <!-- 5: Legal Services -->
-                <div class="voice-card reveal" style="transition-delay: 100ms;">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese female accountant, professional suit, elegant office background, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">会計事務所 E事務所様</p>
-                            <p class="text-xs text-slate-500">税理士 M.S様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「顧問先のDX支援としてMOGさんを紹介しています。安価で丁寧なサポートなので、お客様からも大変喜ばれています。」
-                    </p>
-                </div>
-
-                <!-- 6: Restaurant -->
-                <div class="voice-card reveal" style="transition-delay: 200ms;">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full overflow-hidden img-gen-container" data-prompt="Portrait of a Japanese male chef/restaurant owner in a modern kitchen, friendly, photorealistic">
-                            <div class="loading-spinner"></div>
-                            <img src="" class="generated-img">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-blue-600">イタリアンバル F店様</p>
-                            <p class="text-xs text-slate-500">オーナーシェフ G.T様</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed italic text-sm">
-                        「まるっとDXパックで、店舗管理とネット集客の両方を改善できました。ITの知識がなくても安心して任せられます。」
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section (Restored) -->
-    <section id="faq" class="py-24 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-blue-600 font-bold mb-2 uppercase tracking-widest text-center">FAQ</h2>
-            <p class="text-3xl md:text-4xl font-black text-slate-900 text-center mb-16">よくあるご質問</p>
-            
-            <div class="space-y-6">
-                <div class="bg-slate-50 rounded-2xl p-6 reveal">
-                    <p class="font-bold text-lg mb-2 text-blue-600">Q. 本当にこの価格だけで済みますか？</p>
-                    <p class="text-slate-600 leading-relaxed">はい、プランに記載された基本機能はすべて含まれています。サーバー代も弊社指定の場合は永年無料です。カスタマイズが必要な場合のみ別途お見積りとなります。</p>
-                </div>
-                <div class="bg-slate-50 rounded-2xl p-6 reveal">
-                    <p class="font-bold text-lg mb-2 text-blue-600">Q. 地方の会社でも対応可能ですか？</p>
-                    <p class="text-slate-600 leading-relaxed">はい。ZOOM等のオンライン会議とチャットツールを活用し、全国対応可能です。現在も静岡県外の多くのお客様にご利用いただいております。</p>
-                </div>
-                <div class="bg-slate-50 rounded-2xl p-6 reveal">
-                    <p class="font-bold text-lg mb-2 text-blue-600">Q. ITの知識が全くなくても大丈夫でしょうか？</p>
-                    <p class="text-slate-600 leading-relaxed">もちろんです。難しい設定や操作はすべて弊社で行います。お客様は提供されるシステムをご利用いただくだけで、DXの恩恵を実感いただけます。</p>
-                </div>
-                <div class="bg-slate-50 rounded-2xl p-6 reveal">
-                    <p class="font-bold text-lg mb-2 text-blue-600">Q. 納期が10営業日というのは本当ですか？</p>
-                    <p class="text-slate-600 leading-relaxed">「すぐホームページ」プランであれば、素材（ロゴ・写真等）が揃ってから最短10営業日で公開可能です。バックオフィスDXも最短2週間での導入を目指します。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="primary-gradient text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-4xl font-black mb-8 leading-tight">小さな会社の、<br>IT事務局になりたい。</h2>
-                    <p class="text-slate-400 mb-8">お悩みやご相談、お見積りなどお気軽にご連絡ください。</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <span class="text-xl font-bold">070-1047-1625</span>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <span class="text-xl font-bold">llc.mog@outlook.jp</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-[2rem] text-slate-900 shadow-2xl">
-                    <form class="space-y-4">
-                        <input type="text" class="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition" placeholder="会社名 / お名前">
-                        <input type="email" class="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition" placeholder="メールアドレス">
-                        <textarea class="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition h-32" placeholder="ご相談内容"></textarea>
-                        <button class="w-full bg-blue-600 text-white font-black py-4 rounded-xl hover:bg-blue-700 transition shadow-xl shadow-blue-200">
-                            この内容で送信する
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="mt-20 pt-8 border-t border-white/5 text-slate-500 text-xs flex flex-col md:flex-row justify-between gap-4">
-                <p>&copy; 2026 合同会社MOG All rights reserved. 静岡県から全国へ。</p>
-                <div class="space-x-6">
-                    <a href="#" class="hover:text-white transition">プライバシーポリシー</a>
-                    <a href="#" class="hover:text-white transition">特定商取引法に基づく表記</a>
-                </div>
-            </div>
-        </div>
+      </div>
     </footer>
+  );
 
-    <script>
-        const apiKey = ""; 
+  const HomePage = () => (
+    <div className="pt-20">
+      {/* Hero */}
+      <section className="relative min-h-[90vh] flex items-center bg-slate-900 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-40">
+          <img 
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920" 
+            alt="Office background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="lg:w-2/3">
+            <div className="inline-block bg-blue-600 text-xs font-bold px-4 py-1.5 rounded-full mb-6 tracking-wider text-white">従業員30人未満の企業に特化</div>
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-8 leading-[1.1]">
+              小さな会社の、<br /><span className="text-blue-400 font-black">大きな味方。</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed font-light max-w-xl">
+              本当に必要なDXを、圧倒的に低価格・短納期で。
+              面倒な事務作業を自動化し、経営に集中できる時間を。
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button onClick={() => setActivePage('dx-detail')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-500 transition shadow-2xl shadow-blue-900/40 text-center w-full sm:w-auto">
+                まるっとDXパック
+              </button>
+              <button onClick={() => setActivePage('web-detail')} className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition text-center w-full sm:w-auto">
+                ホームページ制作
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        async function fetchImage(promptText) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-            const payload = {
-                instances: [{ prompt: promptText }],
-                parameters: { sampleCount: 1 }
-            };
+      {/* Services Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-blue-600 font-bold mb-2 tracking-widest uppercase">Our Services</h2>
+            <p className="text-3xl md:text-4xl font-black text-slate-900">MOGが提供する2つの柱</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-200 hover:border-blue-600 transition group cursor-pointer" onClick={() => setActivePage('dx-detail')}>
+              <div className="w-16 h-16 bg-blue-600 text-white flex items-center justify-center rounded-2xl mb-6 shadow-lg">
+                <Briefcase size={32} />
+              </div>
+              <h3 className="text-2xl font-black mb-4">バックオフィスDX</h3>
+              <p className="text-slate-600 mb-8 leading-relaxed">
+                勤怠管理、給与計算、会計、電子契約など、バラバラな事務作業をクラウドで一元化。入力の手間を90%削減します。
+              </p>
+              <button className="flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
+                詳細を見る <ArrowRight size={20} className="ml-2" />
+              </button>
+            </div>
+            <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-200 hover:border-blue-600 transition group cursor-pointer" onClick={() => setActivePage('web-detail')}>
+              <div className="w-16 h-16 bg-blue-600 text-white flex items-center justify-center rounded-2xl mb-6 shadow-lg">
+                <Layout size={32} />
+              </div>
+              <h3 className="text-2xl font-black mb-4">WEB・ホームページ制作</h3>
+              <p className="text-slate-600 mb-8 leading-relaxed">
+                最短10日で納品。スマホ対応はもちろん、SEO対策やMEO対策まで含んだ「集客できる名刺」を低価格で。
+              </p>
+              <button className="flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
+                詳細を見る <ArrowRight size={20} className="ml-2" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        body: JSON.stringify(payload),
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-                    if (!res.ok) throw new Error();
-                    const data = await res.json();
-                    return `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
-                } catch (e) {
-                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
-                }
-            }
-            return null;
-        }
+      {/* Voice Section */}
+      <section id="voice" className="py-24 bg-slate-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="text-center mb-16">
+            <h2 className="text-blue-600 font-bold mb-2 tracking-widest uppercase">Client Voices</h2>
+            <p className="text-3xl md:text-4xl font-black text-slate-900">導入企業様の声</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { type: "製造業", name: "A社 代表取締役", voice: "紙の勤怠管理から脱却でき、給与計算のミスがゼロに。設定を丸投げできたのが最大。" },
+              { type: "小売業", name: "B店 店長", voice: "HP制作をお願いしましたが10日で公開。スマホで見やすく、新規のお客様が増えています。" },
+              { type: "建設業", name: "C社 専務", voice: "経費精算がスマホで完結。現場から会社に戻る手間がなくなりました。月額1万円以下でこの変化。" },
+              { type: "ITサービス", name: "D社 代表", voice: "バックオフィスをMOGに任せることで本業に集中。売上が前年比20%向上しました。" },
+              { type: "会計事務所", name: "E事務所 所長", voice: "顧問先のDX支援として紹介。安価で丁寧なサポートなのでお客様から大変喜ばれています。" },
+              { type: "飲食店", name: "F店 オーナー", voice: "まるっとDXパックで店舗管理と集客を両方改善。IT知識がなくても安心して任せられます。" }
+            ].map((v, i) => (
+              <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-1 text-yellow-400 mb-4">
+                  {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
+                </div>
+                <p className="text-slate-700 leading-relaxed mb-6 font-medium">「{v.voice}」</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                    <Quote size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-blue-600">{v.type}</p>
+                    <p className="text-sm font-bold text-slate-900">{v.name}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        async function initHero() {
-            const hero = document.getElementById('hero-section');
-            const loader = document.getElementById('hero-loader');
-            const prompt = hero.getAttribute('data-prompt');
-            
-            const imgUrl = await fetchImage(prompt);
-            if (imgUrl) {
-                hero.style.backgroundImage = `url('${imgUrl}')`;
-                loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 500);
-            }
-        }
+      {/* FAQ */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-blue-600 font-bold mb-2 tracking-widest uppercase">FAQ</h2>
+            <p className="text-3xl md:text-4xl font-black text-slate-900">よくあるご質問</p>
+          </div>
+          <div className="space-y-6">
+            {[
+              { q: "本当にこの価格だけで済みますか？", a: "はい、プランに含まれる機能はすべて込みです。カスタマイズ希望時のみ別途お見積りとなります。" },
+              { q: "ITの知識が全くなくても大丈夫でしょうか？", a: "もちろんです。難しい設定や操作はすべて弊社で行います。お客様は利用するだけです。" },
+              { q: "納期はどのくらいですか？", a: "HP制作は最短10日、DX導入は最短2週間での稼働を目指します。" }
+            ].map((faq, i) => (
+              <div key={i} className="bg-slate-50 p-6 rounded-2xl">
+                <p className="font-bold text-lg mb-2 text-blue-600">Q. {faq.q}</p>
+                <p className="text-slate-600 leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 
-        async function initWebImages() {
-            const containers = document.querySelectorAll('.img-gen-container');
-            containers.forEach(async (container) => {
-                const prompt = container.getAttribute('data-prompt');
-                const img = container.querySelector('.generated-img');
-                const spinner = container.querySelector('.loading-spinner');
-                
-                const imgUrl = await fetchImage(prompt);
-                if (imgUrl) {
-                    img.src = imgUrl;
-                    img.style.display = 'block';
-                    spinner.style.display = 'none';
-                }
-            });
-        }
+  const DXDetailPage = () => (
+    <div className="pt-24 pb-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => setActivePage('home')} className="text-blue-600 font-bold mb-8 flex items-center hover:translate-x-[-4px] transition">
+          <ArrowRight size={20} className="mr-2 rotate-180" /> ホームへ戻る
+        </button>
+        
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+          <div>
+            <h2 className="text-blue-600 font-bold mb-4 tracking-widest uppercase">Back Office DX Detail</h2>
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+              事務作業をゼロに近づける。<br />
+              <span className="text-blue-600">まるっとDXパック</span>
+            </h1>
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+              勤怠・給与・会計・請求・契約。これらをバラバラに管理していませんか？<br />
+              MOGのDXパックは、世界シェアの高いクラウドツールを組み合わせ、御社に最適な「自動化ライン」を構築します。
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-50 p-4 rounded-xl border-l-4 border-blue-600">
+                <p className="text-sm font-bold text-slate-500">導入スピード</p>
+                <p className="text-xl font-black text-slate-900">最短2週間</p>
+              </div>
+              <div className="bg-slate-50 p-4 rounded-xl border-l-4 border-blue-600">
+                <p className="text-sm font-bold text-slate-500">手作業削減率</p>
+                <p className="text-xl font-black text-slate-900">最大90%</p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-[3rem] overflow-hidden shadow-2xl relative">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Dashboard" />
+            <div className="absolute inset-0 bg-blue-600/10 backdrop-blur-[2px]"></div>
+          </div>
+        </div>
 
-        function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) el.classList.add("active");
-            });
-        }
+        <div className="mb-24">
+          <h3 className="text-3xl font-black text-center mb-12">具体的にお手伝いすること</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: <Clock />, title: "勤怠・給与一元化", desc: "タイムカードをスマホ打刻にし、そのデータを直接給与計算へ飛ばします。手入力は不要です。" },
+              { icon: <Coins />, title: "クラウド会計・銀行連携", desc: "銀行明細を自動取得。仕訳の大部分をAIが判断するため、経理の時間が劇的に減ります。" },
+              { icon: <Shield />, title: "電子契約・文書管理", desc: "契約書を電子化。印紙代を削減し、過去の契約書も一瞬で検索可能にします。" }
+            ].map((item, i) => (
+              <div key={i} className="p-8 bg-slate-50 rounded-3xl border border-slate-100">
+                <div className="w-12 h-12 bg-white text-blue-600 flex items-center justify-center rounded-xl shadow-sm mb-6">
+                  {item.icon}
+                </div>
+                <h4 className="text-xl font-bold mb-4">{item.title}</h4>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        window.onload = () => {
-            initHero();
-            initWebImages();
-            reveal();
-        };
-        window.onscroll = reveal;
-    </script>
-</body>
-</html>
+        <div className="bg-slate-50 p-12 rounded-[3rem] mb-24">
+          <h3 className="text-2xl font-black mb-8 text-center">導入までの3ステップ</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-black">1</div>
+              <h4 className="font-bold mb-2">現状把握ヒアリング</h4>
+              <p className="text-sm text-slate-500">現在の業務フローを伺い、無駄な工程を洗い出します。</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-black">2</div>
+              <h4 className="font-bold mb-2">システム設定代行</h4>
+              <p className="text-sm text-slate-500">初期設定はすべてMOGが行います。お客様は使い始めるだけ。</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-black">3</div>
+              <h4 className="font-bold mb-2">操作レクチャー</h4>
+              <p className="text-sm text-slate-500">従業員様への説明や操作方法を丁寧にレクチャーします。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-blue-600 rounded-[3rem] p-12 text-white text-center">
+          <h3 className="text-3xl font-black mb-6">「何をすればいいかわからない」でOK</h3>
+          <p className="text-blue-100 mb-10 text-lg max-w-2xl mx-auto">
+            現状の業務フローをヒアリングし、御社にとって最もストレスの少ない方法を私たちが設計・設定します。
+          </p>
+          <button onClick={() => { document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-100 transition shadow-xl">
+            無料で業務診断を受ける
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const WebDetailPage = () => (
+    <div className="pt-24 pb-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => setActivePage('home')} className="text-blue-600 font-bold mb-8 flex items-center hover:translate-x-[-4px] transition">
+          <ArrowRight size={20} className="mr-2 rotate-180" /> ホームへ戻る
+        </button>
+
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+          <div className="order-2 lg:order-1">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="aspect-[4/5] bg-slate-200 rounded-[2rem] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Mobile design" />
+              </div>
+              <div className="aspect-[4/5] bg-slate-200 rounded-[2rem] overflow-hidden mt-8">
+                <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Desktop design" />
+              </div>
+            </div>
+          </div>
+          <div className="order-1 lg:order-2">
+            <h2 className="text-blue-600 font-bold mb-4 tracking-widest uppercase">Web Production Detail</h2>
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+              集客につながる、<br />
+              <span className="text-blue-600">「働く名刺」</span>を作る。
+            </h1>
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+              「とりあえずHPはあるけど、何も生まれていない」そんな状況を打破します。<br />
+              MOGのWEB制作は、見た目の美しさはもちろん、Googleマップ対策（MEO）や検索対策（SEO）を標準装備。
+            </p>
+            <div className="space-y-4 mb-10">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                  <Smartphone size={18} />
+                </div>
+                <p className="font-bold text-slate-700">スマホ・タブレット完全対応</p>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                  <Zap size={18} />
+                </div>
+                <p className="font-bold text-slate-700">爆速表示スピード設計</p>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                  <Settings size={18} />
+                </div>
+                <p className="font-bold text-slate-700">お知らせ・ブログ更新機能込み</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-24">
+          <h3 className="text-3xl font-black text-center mb-12">選べる3つのプラン</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: "シンプルプラン", price: "14.8万円", feat: ["5ページ制作", "スマホ対応", "お問い合わせフォーム"] },
+              { title: "スタンダードプラン", price: "24.8万円", feat: ["10ページ制作", "ブログ機能", "SEO初期設定", "MEO対策"] },
+              { title: "集客特化プラン", price: "39.8万円", feat: ["15ページ制作", "動画挿入", "WEB広告運用相談", "競合分析"] }
+            ].map((p, i) => (
+              <div key={i} className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 flex flex-col">
+                <h4 className="text-xl font-bold mb-2">{p.title}</h4>
+                <p className="text-3xl font-black text-blue-600 mb-6">{p.price}</p>
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {p.feat.map((f, j) => (
+                    <li key={j} className="text-sm text-slate-600 flex items-center">
+                      <Check size={14} className="mr-2 text-green-500" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => { document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }); }} className="w-full py-3 bg-white border-2 border-slate-200 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">見積りを依頼する</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-24">
+          <h3 className="text-3xl font-black text-center mb-12">MOGの制作フロー</h3>
+          <div className="grid md:grid-cols-4 gap-4 relative">
+            {[
+              { step: "01", title: "ヒアリング", desc: "目的とターゲットを明確にします。" },
+              { step: "02", title: "構成・デザイン", desc: "使い勝手の良いUIを提案します。" },
+              { step: "03", title: "構築", desc: "最新技術でサクサク動くサイトを制作。" },
+              { step: "04", title: "公開・保守", desc: "公開後も運用の相談が可能です。" }
+            ].map((s, i) => (
+              <div key={i} className="relative p-6 bg-slate-50 rounded-3xl group hover:bg-blue-600 transition-colors duration-500">
+                <p className="text-4xl font-black text-blue-100 mb-4 group-hover:text-blue-400 transition-colors">{s.step}</p>
+                <h4 className="text-lg font-black mb-2 group-hover:text-white transition-colors">{s.title}</h4>
+                <p className="text-slate-500 text-sm group-hover:text-blue-50 transition-colors">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-slate-900 p-12 rounded-[3rem] text-white">
+            <h4 className="text-2xl font-black mb-4">お急ぎの方へ</h4>
+            <p className="text-slate-400 mb-8">「来週の商談までに公開したい」といったご要望にも、可能な限りお応えします。シンプルプランであれば最短10日で納品可能です。</p>
+            <button onClick={() => { document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-blue-400 font-bold flex items-center hover:gap-2 transition-all">
+              納期について相談する <ArrowRight className="ml-2" />
+            </button>
+          </div>
+          <div className="bg-slate-100 p-12 rounded-[3rem]">
+            <h4 className="text-2xl font-black mb-4 text-slate-900">月額管理もお任せ</h4>
+            <p className="text-slate-600 mb-8">ドメイン・サーバーの保守、月1回の内容修正など、月額5,000円〜で面倒な管理を代行いたします。</p>
+            <button onClick={() => setActivePage('maintenance-detail')} className="text-blue-600 font-bold flex items-center hover:gap-2 transition-all">
+              保守プランの詳細を見る <ArrowRight className="ml-2" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const MaintenanceDetailPage = () => (
+    <div className="pt-24 pb-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => setActivePage('web-detail')} className="text-blue-600 font-bold mb-8 flex items-center hover:translate-x-[-4px] transition">
+          <ArrowRight size={20} className="mr-2 rotate-180" /> WEB制作詳細へ戻る
+        </button>
+
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-blue-600 font-bold mb-4 tracking-widest uppercase">Maintenance Plan</h2>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+            作って終わり、にさせない。<br />
+            <span className="text-blue-600">安心・伴走型サポート</span>
+          </h1>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            ホームページは公開してからがスタートです。ドメインの更新忘れや、突然の不具合、ちょっとした文字修正など、WEBの「困った」をすべて引き受けます。
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 mb-24">
+          <div className="space-y-8">
+            {[
+              { icon: <Lock />, title: "セキュリティ・サーバー保守", desc: "SSL更新、サーバーの死活監視、バックアップを代行。サイバーリスクから守ります。" },
+              { icon: <Settings />, title: "軽微な修正・更新代行", desc: "テキストの変更、画像の差し替え、バナーの追加などを月1回まで無料で対応します。" },
+              { icon: <BarChart />, title: "アクセス解析・レポート", desc: "月次のアクセス状況をまとめ、改善提案を行います（スタンダードプラン以上）。" }
+            ].map((item, i) => (
+              <div key={i} className="flex gap-6">
+                <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                  <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-slate-900 text-white p-10 rounded-[3rem]">
+            <h4 className="text-2xl font-black mb-6">保守料金メニュー</h4>
+            <div className="space-y-6">
+              <div className="border-b border-white/10 pb-4">
+                <div className="flex justify-between items-end mb-2">
+                  <span className="font-bold">ライト保守</span>
+                  <span className="text-2xl font-black">5,000円<span className="text-sm font-normal">/月</span></span>
+                </div>
+                <p className="text-xs text-slate-400">ドメイン・サーバー維持管理、メールサポート</p>
+              </div>
+              <div className="border-b border-white/10 pb-4">
+                <div className="flex justify-between items-end mb-2">
+                  <span className="font-bold text-blue-400">スタンダード保守</span>
+                  <span className="text-2xl font-black">15,000円<span className="text-sm font-normal">/月</span></span>
+                </div>
+                <p className="text-xs text-slate-400">ライト全機能 ＋ 月1回の修正代行 ＋ 簡易レポート</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-end mb-2">
+                  <span className="font-bold">マーケティング保守</span>
+                  <span className="text-2xl font-black">30,000円<span className="text-sm font-normal">/月</span></span>
+                </div>
+                <p className="text-xs text-slate-400">戦略相談 ＋ SEOモニタリング ＋ 詳細分析レポート</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 p-12 rounded-[3rem] text-center">
+          <h3 className="text-2xl font-black mb-6 text-slate-900">他社で制作したサイトの保守もお受けします</h3>
+          <p className="text-slate-600 mb-10 text-lg max-w-2xl mx-auto">
+            「制作会社と連絡が取れなくなった」「管理費が高い」などのお悩みがあればご相談ください。移管作業からサポートいたします。
+          </p>
+          <button onClick={() => { document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition shadow-xl">
+            保守移管について相談する
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen font-['Noto_Sans_JP'] text-slate-900 selection:bg-blue-100">
+      <Navigation />
+      
+      <main>
+        {activePage === 'home' && <HomePage />}
+        {activePage === 'dx-detail' && <DXDetailPage />}
+        {activePage === 'web-detail' && <WebDetailPage />}
+        {activePage === 'maintenance-detail' && <MaintenanceDetailPage />}
+      </main>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
