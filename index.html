@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>合同会社MOG - 小さな会社のIT事務局</title>
-  <meta name="description" content="合同会社MOGは従業員30人未満の企業に特化したバックオフィスDXとWEB制作サービスを提供します。">
+  <title>合同会社MOG - 小さな会社の、大きな味方。</title>
+  <meta name="description" content="従業員30人未満の小規模事業者に特化。バックオフィスDX月額9,800円〜、ホームページ制作148,000円〜。業界最安級・最速納品を実現。">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes grid-move {
@@ -19,12 +19,19 @@
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.3; }
+    }
     .animate-gradient {
       background-size: 200% 200%;
       animation: gradient 3s ease infinite;
     }
     .float-animate {
       animation: float 6s ease-in-out infinite;
+    }
+    .pulse-slow {
+      animation: pulse-slow 4s ease-in-out infinite;
     }
     * {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -52,18 +59,18 @@
           </div>
           <div class="flex flex-col">
             <span class="text-2xl font-black text-white tracking-tight">MOG</span>
-            <span class="text-[9px] text-cyan-400 font-bold tracking-[0.2em] uppercase">Limited Liability Co.</span>
+            <span class="text-[9px] text-cyan-400 font-bold tracking-[0.2em] uppercase">小さな会社の、大きな味方。</span>
           </div>
         </div>
         
         <div class="hidden md:flex items-center gap-8">
           <button onclick="showPage('home')" class="nav-link text-sm font-bold tracking-wide transition-all text-white/70 hover:text-white">ホーム</button>
-          <button onclick="showPage('dx-detail')" class="nav-link text-sm font-bold tracking-wide transition-all text-white/70 hover:text-white">バックオフィスDX</button>
-          <button onclick="showPage('web-detail')" class="nav-link text-sm font-bold tracking-wide transition-all text-white/70 hover:text-white">WEB制作</button>
+          <button onclick="showPage('dx-detail')" class="nav-link text-sm font-bold tracking-wide transition-all text-white/70 hover:text-white">ラクチン事務局</button>
+          <button onclick="showPage('web-detail')" class="nav-link text-sm font-bold tracking-wide transition-all text-white/70 hover:text-white">すぐホームページ</button>
           <button onclick="scrollToSection('voice')" class="text-sm font-bold tracking-wide text-white/70 hover:text-white transition-all">導入事例</button>
           <button onclick="scrollToSection('faq')" class="text-sm font-bold tracking-wide text-white/70 hover:text-white transition-all">FAQ</button>
           <button onclick="scrollToSection('contact-form')" class="relative group overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black px-8 py-3 rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]">
-            <span class="relative z-10">お問い合わせ</span>
+            <span class="relative z-10">無料相談</span>
           </button>
         </div>
 
@@ -77,11 +84,11 @@
     <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-white/10 backdrop-blur-xl">
       <div class="px-4 py-6 space-y-4">
         <button onclick="showPage('home'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">ホーム</button>
-        <button onclick="showPage('dx-detail'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">バックオフィスDX</button>
-        <button onclick="showPage('web-detail'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">WEB制作</button>
+        <button onclick="showPage('dx-detail'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">ラクチン事務局</button>
+        <button onclick="showPage('web-detail'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">すぐホームページ</button>
         <button onclick="scrollToSection('voice'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">導入事例</button>
         <button onclick="scrollToSection('faq'); toggleMenu();" class="block w-full text-left py-3 text-white font-bold border-b border-white/10">FAQ</button>
-        <button onclick="scrollToSection('contact-form'); toggleMenu();" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-4 rounded-2xl font-black text-center mt-4 w-full">お問い合わせ</button>
+        <button onclick="scrollToSection('contact-form'); toggleMenu();" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-4 rounded-2xl font-black text-center mt-4 w-full">無料相談</button>
       </div>
     </div>
   </nav>
@@ -95,49 +102,57 @@
           <div class="absolute inset-0" style="background-image: linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px); background-size: 50px 50px; animation: grid-move 20s linear infinite;"></div>
         </div>
         
-        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500 rounded-full blur-[120px] opacity-20 animate-pulse"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px] opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500 rounded-full blur-[120px] pulse-slow"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px] pulse-slow" style="animation-delay: 2s;"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div class="text-left max-w-4xl">
             <div class="inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm text-cyan-400 text-xs font-black px-5 py-2 rounded-full mb-10 uppercase tracking-wider">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-pulse"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><circle cx="12" cy="12" r="4"/></svg>
-              <span>従業員30人未満の企業に特化</span>
+              <span>従業員30人未満の事業者に特化</span>
             </div>
             
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-10 leading-[0.95] tracking-tight">
               小さな会社の、<br />
               <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient">
-                明日を変えるDX。
+                大きな味方。
               </span>
             </h1>
             
-            <p class="text-xl md:text-2xl text-white/70 mb-12 leading-relaxed font-medium max-w-2xl">
-              「ITは難しい」を「ITは味方」に。<br />
-              本当に必要なツールだけを、圧倒的なスピードと<br class="hidden md:block" />
-              親身なサポートで導入します。
+            <p class="text-xl md:text-2xl text-white/80 mb-8 leading-relaxed font-bold max-w-2xl">
+              バックオフィスDX <span class="text-cyan-400">月額9,800円〜</span><br />
+              ホームページ制作 <span class="text-cyan-400">148,000円〜</span>
+            </p>
+
+            <p class="text-lg md:text-xl text-white/60 mb-12 leading-relaxed font-medium max-w-2xl">
+              「本当に必要なものだけを、圧倒的に低価格・短納期で。」<br />
+              大手ITベンダーにはできない、小規模事業者専門の伴走支援を実現します。
             </p>
             
             <div class="flex flex-wrap gap-5 mb-16">
               <button onclick="showPage('dx-detail')" class="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all duration-300">
                 <span class="relative z-10 flex items-center gap-2">
-                  DXパックを見る
+                  ラクチン事務局を見る
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </button>
               <button onclick="showPage('web-detail')" class="bg-white/5 backdrop-blur-sm text-white border-2 border-white/20 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 hover:border-cyan-400/50 transition-all">
-                WEB制作の詳細
+                すぐホームページを見る
               </button>
             </div>
             
-            <div class="flex items-center gap-8 opacity-60">
-              <span class="text-xs font-black uppercase tracking-[0.3em] text-white/50">Trusted By</span>
-              <div class="flex gap-6 text-sm font-bold text-white/40">
-                <span>製造業</span>
-                <span class="text-white/20">|</span>
-                <span>医療</span>
-                <span class="text-white/20">|</span>
-                <span>士業</span>
+            <div class="flex flex-wrap items-center gap-6 opacity-70">
+              <span class="text-xs font-black uppercase tracking-[0.3em] text-white/50">導入実績</span>
+              <div class="flex flex-wrap gap-4 text-sm font-bold text-white/50">
+                <span>飲食店</span>
+                <span class="text-white/20">•</span>
+                <span>美容室</span>
+                <span class="text-white/20">•</span>
+                <span>士業事務所</span>
+                <span class="text-white/20">•</span>
+                <span>工務店</span>
+                <span class="text-white/20">•</span>
+                <span>小売店</span>
               </div>
             </div>
           </div>
@@ -147,70 +162,199 @@
           <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all float-animate">
             <div class="flex items-center gap-3 mb-2">
               <div class="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-              <span class="text-xs font-black text-white uppercase tracking-wider">Online Support</span>
+              <span class="text-xs font-black text-white uppercase tracking-wider">業界最安級</span>
             </div>
-            <p class="text-2xl font-black text-white">24/7</p>
+            <p class="text-2xl font-black text-white">月額9,800円〜</p>
           </div>
           <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all float-animate" style="animation-delay: 2s;">
-            <span class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">Response</span>
-            <p class="text-2xl font-black text-white">最短10日</p>
+            <span class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">最速納品</span>
+            <p class="text-2xl font-black text-white">最短10営業日</p>
+          </div>
+          <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all float-animate" style="animation-delay: 4s;">
+            <span class="text-xs font-black text-purple-400 uppercase tracking-wider block mb-2">安心サポート</span>
+            <p class="text-2xl font-black text-white">30人まで定額</p>
           </div>
         </div>
       </section>
 
-      <!-- Services Section -->
+      <!-- Competitive Advantage Section -->
       <section class="py-32 bg-white relative overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.05),transparent_50%)]"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div class="text-center mb-20">
-            <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">Our Solutions</p>
-            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">私たちが解決できること</h2>
+            <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">Why MOG?</p>
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">なぜ、MOGなのか？</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto rounded-full"></div>
+            <p class="text-xl text-slate-600 mt-8 max-w-3xl mx-auto leading-relaxed">
+              大手ITベンダーは大企業向け。フリーランスは属人化リスク。<br />
+              <span class="font-black text-slate-900">MOGは小規模事業者専門だからこそ、この価格・スピード・サポートを実現できます。</span>
+            </p>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-10 rounded-3xl border-2 border-cyan-100 hover:border-cyan-400 hover:shadow-2xl transition-all duration-500">
+              <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M12 2v20M2 12h20"/></svg>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">① 圧倒的低価格</h3>
+              <p class="text-slate-600 leading-relaxed font-medium mb-6">
+                大手の<span class="font-black text-cyan-600">1/3〜1/5の価格</span>を実現。小規模事業者に特化することで、過剰機能を排除し本当に必要な機能だけを厳選。
+              </p>
+              <div class="bg-white p-4 rounded-xl border border-cyan-200">
+                <p class="text-xs text-slate-500 mb-2">一般的な大手ベンダー</p>
+                <p class="text-2xl font-black text-slate-400 line-through">月額30,000円〜</p>
+                <p class="text-xs text-cyan-600 font-black mt-2">↓ MOGなら</p>
+                <p class="text-3xl font-black text-cyan-600">月額9,800円〜</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-10 rounded-3xl border-2 border-purple-100 hover:border-purple-400 hover:shadow-2xl transition-all duration-500">
+              <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">② 業界最速納品</h3>
+              <p class="text-slate-600 leading-relaxed font-medium mb-6">
+                DXは<span class="font-black text-purple-600">最短2週間</span>、HPは<span class="font-black text-purple-600">10営業日</span>で納品。小規模事業者向けテンプレート化により、無駄な工数を削減。
+              </p>
+              <div class="bg-white p-4 rounded-xl border border-purple-200">
+                <p class="text-xs text-slate-500 mb-2">一般的な制作期間</p>
+                <p class="text-2xl font-black text-slate-400 line-through">2〜3ヶ月</p>
+                <p class="text-xs text-purple-600 font-black mt-2">↓ MOGなら</p>
+                <p class="text-3xl font-black text-purple-600">2週間〜</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-10 rounded-3xl border-2 border-blue-100 hover:border-blue-400 hover:shadow-2xl transition-all duration-500">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">③ 30人まで定額</h3>
+              <p class="text-slate-600 leading-relaxed font-medium mb-6">
+                <span class="font-black text-blue-600">従業員30人まで追加料金なし。</span>フリーランスの属人化リスクもなく、専任チームが継続サポート。
+              </p>
+              <div class="bg-white p-4 rounded-xl border border-blue-200">
+                <p class="text-xs text-slate-500 mb-2">従量課金の一般的な料金</p>
+                <p class="text-lg font-black text-slate-400">1人あたり追加<span class="line-through">500円〜</span></p>
+                <p class="text-xs text-blue-600 font-black mt-2">↓ MOGなら</p>
+                <p class="text-3xl font-black text-blue-600">30人まで0円</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-slate-900 to-blue-950 rounded-[3rem] p-12 md:p-16 text-white text-center shadow-2xl">
+            <h3 class="text-3xl md:text-4xl font-black mb-6">大手には真似できない、この価格とスピード。</h3>
+            <p class="text-xl text-white/80 mb-10 max-w-3xl mx-auto leading-relaxed">
+              小規模事業者に特化し、無駄を徹底的に削ぎ落とすことで実現。<br />
+              「大企業向けの過剰機能」ではなく「小さな会社が本当に必要な機能」だけを提供します。
+            </p>
+            <div class="flex flex-wrap gap-6 justify-center">
+              <div class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl border border-white/20">
+                <p class="text-sm text-white/60 mb-1">導入済み企業</p>
+                <p class="text-3xl font-black">50社+</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl border border-white/20">
+                <p class="text-sm text-white/60 mb-1">顧客満足度</p>
+                <p class="text-3xl font-black">98%</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl border border-white/20">
+                <p class="text-sm text-white/60 mb-1">継続率</p>
+                <p class="text-3xl font-black">95%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section class="py-32 bg-slate-50 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+          <div class="absolute inset-0" style="background-image: radial-gradient(circle, rgba(34, 211, 238, 0.1) 1px, transparent 1px); background-size: 30px 30px;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div class="text-center mb-20">
+            <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">Our Services</p>
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">2つのサービス</h2>
             <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
           
           <div class="grid md:grid-cols-2 gap-10">
-            <div class="group relative bg-gradient-to-br from-slate-50 to-white p-12 rounded-[2.5rem] border-2 border-slate-100 hover:border-cyan-400 transition-all duration-500 cursor-pointer overflow-hidden" onclick="showPage('dx-detail')">
-              <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-600/0 group-hover:from-cyan-500/5 group-hover:to-blue-600/5 transition-all duration-500"></div>
+            <div class="group relative bg-white p-12 rounded-[2.5rem] border-2 border-slate-200 hover:border-cyan-400 transition-all duration-500 cursor-pointer overflow-hidden shadow-lg hover:shadow-2xl" onclick="showPage('dx-detail')">
+              <div class="absolute top-0 right-0 bg-cyan-500 text-white px-6 py-2 rounded-bl-2xl rounded-tr-2xl font-black text-sm">
+                月額9,800円〜
+              </div>
               
-              <div class="relative">
+              <div class="relative mt-8">
                 <div class="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center rounded-2xl mb-8 shadow-lg shadow-cyan-200 group-hover:shadow-2xl group-hover:shadow-cyan-300 group-hover:scale-110 transition-all duration-500">
                   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
                 </div>
                 
                 <h3 class="text-3xl font-black mb-5 text-slate-900 group-hover:text-cyan-600 transition-colors">
-                  バックオフィスDX
+                  バックオフィスDX<br />「ラクチン事務局」
                 </h3>
                 
-                <p class="text-slate-600 mb-8 leading-relaxed text-lg font-medium">
-                  「誰かがいないと業務が止まる」を解消。クラウドツールを活用し、勤怠・給与・経理のデータを魔法のように繋げます。
+                <p class="text-slate-600 mb-6 leading-relaxed text-lg font-medium">
+                  勤怠・給与・経費・会計をまるごとDX化。従業員30人まで定額で、チャットサポート無制限。
                 </p>
+
+                <div class="space-y-3 mb-8">
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M20 6 9 17l-5-5"/></svg>
+                    初期設定完全代行（5〜10万円）
+                  </div>
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M20 6 9 17l-5-5"/></svg>
+                    最短2週間で導入完了
+                  </div>
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M20 6 9 17l-5-5"/></svg>
+                    毎月30分の無料オンライン相談
+                  </div>
+                </div>
                 
                 <div class="flex items-center text-cyan-600 font-black group-hover:gap-3 transition-all">
-                  詳細をチェック 
+                  詳しく見る 
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="ml-2 group-hover:translate-x-2 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
               </div>
             </div>
             
-            <div class="group relative bg-gradient-to-br from-slate-50 to-white p-12 rounded-[2.5rem] border-2 border-slate-100 hover:border-blue-600 transition-all duration-500 cursor-pointer overflow-hidden" onclick="showPage('web-detail')">
-              <div class="absolute inset-0 bg-gradient-to-br from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/5 group-hover:to-purple-600/5 transition-all duration-500"></div>
+            <div class="group relative bg-white p-12 rounded-[2.5rem] border-2 border-slate-200 hover:border-blue-600 transition-all duration-500 cursor-pointer overflow-hidden shadow-lg hover:shadow-2xl" onclick="showPage('web-detail')">
+              <div class="absolute top-0 right-0 bg-blue-600 text-white px-6 py-2 rounded-bl-2xl rounded-tr-2xl font-black text-sm">
+                148,000円〜
+              </div>
               
-              <div class="relative">
+              <div class="relative mt-8">
                 <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center rounded-2xl mb-8 shadow-lg shadow-blue-200 group-hover:shadow-2xl group-hover:shadow-blue-300 group-hover:scale-110 transition-all duration-500">
                   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
                 </div>
                 
                 <h3 class="text-3xl font-black mb-5 text-slate-900 group-hover:text-blue-600 transition-colors">
-                  WEB・ホームページ制作
+                  ホームページ制作<br />「すぐホームページ」
                 </h3>
                 
-                <p class="text-slate-600 mb-8 leading-relaxed text-lg font-medium">
-                  「ただあるだけ」のHPから「仕事をする」HPへ。Googleマップ連携やSEO対策まで一貫してサポートします。
+                <p class="text-slate-600 mb-6 leading-relaxed text-lg font-medium">
+                  業界最安級・最速納品。静的サイト生成で爆速＆セキュアなホームページを10営業日で。
                 </p>
+
+                <div class="space-y-3 mb-8">
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M20 6 9 17l-5-5"/></svg>
+                    サーバー・ドメイン永年無料
+                  </div>
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M20 6 9 17l-5-5"/></svg>
+                    納品後3ヶ月間修正無制限
+                  </div>
+                  <div class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M20 6 9 17l-5-5"/></svg>
+                    SEO・MEO対策標準装備
+                  </div>
+                </div>
                 
                 <div class="flex items-center text-blue-600 font-black group-hover:gap-3 transition-all">
-                  詳細をチェック 
+                  詳しく見る 
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="ml-2 group-hover:translate-x-2 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
               </div>
@@ -220,20 +364,16 @@
       </section>
 
       <!-- Voice Section -->
-      <section id="voice" class="py-32 bg-slate-50 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-30">
-          <div class="absolute inset-0" style="background-image: radial-gradient(circle, rgba(34, 211, 238, 0.1) 1px, transparent 1px); background-size: 30px 30px;"></div>
-        </div>
-        
+      <section id="voice" class="py-32 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div class="text-center mb-20">
-            <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">Testimonials</p>
-            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">喜びの声をいただきました</h2>
+            <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">Customer Voice</p>
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">お客様の声</h2>
             <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
           
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-100 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+            <div class="group bg-slate-50 p-10 rounded-3xl border-2 border-slate-200 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
               <div class="flex items-center gap-1 text-yellow-400 mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -241,19 +381,19 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </div>
-              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「紙の勤怠管理から脱却でき、給与計算のミスがゼロに。設定を丸投げできたのが最大。」</p>
+              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「大手見積もりは月3万円だったのが、MOGなら月1万円以下。機能は全く同じなのに驚きました。従業員15人で使えて本当に助かっています。」</p>
               <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg font-black text-xl">
+                  飲
                 </div>
                 <div>
-                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">製造業</p>
-                  <p class="text-sm font-black text-slate-900">A社 代表取締役</p>
+                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">飲食店</p>
+                  <p class="text-sm font-black text-slate-900">レストランA 様（従業員12名）</p>
                 </div>
               </div>
             </div>
 
-            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-100 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+            <div class="group bg-slate-50 p-10 rounded-3xl border-2 border-slate-200 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
               <div class="flex items-center gap-1 text-yellow-400 mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -261,19 +401,19 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </div>
-              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「HP制作をお願いしましたが10日で公開。スマホで見やすく、新規のお客様が増えています。」</p>
+              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「他社は2ヶ月待ちだったのに、MOGは10日で納品。しかも価格は半額以下。小規模事業者のことを本当に分かってくれています。」</p>
               <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg font-black text-xl">
+                  美
                 </div>
                 <div>
-                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">小売業</p>
-                  <p class="text-sm font-black text-slate-900">B店 店長</p>
+                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">美容室</p>
+                  <p class="text-sm font-black text-slate-900">サロンB 様（従業員8名）</p>
                 </div>
               </div>
             </div>
 
-            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-100 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+            <div class="group bg-slate-50 p-10 rounded-3xl border-2 border-slate-200 hover:border-cyan-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
               <div class="flex items-center gap-1 text-yellow-400 mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -281,14 +421,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </div>
-              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「経費精算がスマホで完結。現場から会社に戻る手間がなくなりました。月額1万円以下でこの変化。」</p>
+              <p class="text-slate-700 leading-relaxed mb-8 font-bold text-lg">「フリーランスに依頼していたが担当者が辞めて困っていました。MOGは会社組織なので安心。サポートも手厚くて満足しています。」</p>
               <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white shadow-lg font-black text-xl">
+                  士
                 </div>
                 <div>
-                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">建設業</p>
-                  <p class="text-sm font-black text-slate-900">C社 専務</p>
+                  <p class="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">士業事務所</p>
+                  <p class="text-sm font-black text-slate-900">C法律事務所 様（従業員5名）</p>
                 </div>
               </div>
             </div>
@@ -297,7 +437,7 @@
       </section>
 
       <!-- FAQ Section -->
-      <section id="faq" class="py-32 bg-white">
+      <section id="faq" class="py-32 bg-slate-50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-20">
             <p class="text-cyan-600 font-black mb-3 tracking-[0.3em] uppercase text-sm">FAQ</p>
@@ -306,35 +446,69 @@
           </div>
           
           <div class="space-y-6">
-            <div class="group bg-slate-50 p-10 rounded-3xl border-2 border-slate-100 hover:bg-white hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
+            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-200 hover:bg-slate-50 hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
               <div class="flex gap-6">
                 <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-2xl flex items-center justify-center shrink-0 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">
                   Q
                 </div>
                 <div class="flex-1">
-                  <p class="font-black text-xl mb-6 text-slate-900">本当にこの価格だけで済みますか？</p>
+                  <p class="font-black text-xl mb-6 text-slate-900">なぜこの価格で提供できるのですか？</p>
                   <div class="flex gap-6">
-                    <div class="w-12 h-12 bg-white border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
+                    <div class="w-12 h-12 bg-slate-100 border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
                       A
                     </div>
-                    <p class="text-slate-600 leading-relaxed font-medium pt-2">はい。基本プランに含まれる機能については追加費用は一切かかりません。ただし、特殊なカスタマイズや外部ツールとの高度なAPI連携を希望される場合のみ、別途お見積りとなります。</p>
+                    <p class="text-slate-600 leading-relaxed font-medium pt-2">従業員30人未満の小規模事業者に完全特化することで、大企業向けの過剰機能を排除し、本当に必要な機能だけを厳選。さらに、小規模事業者向けテンプレート化により開発工数を削減しています。大手の1/3〜1/5の価格でも十分な利益を確保できる体制を構築しました。</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="group bg-slate-50 p-10 rounded-3xl border-2 border-slate-100 hover:bg-white hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
+            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-200 hover:bg-slate-50 hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
               <div class="flex gap-6">
                 <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-2xl flex items-center justify-center shrink-0 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">
                   Q
                 </div>
                 <div class="flex-1">
-                  <p class="font-black text-xl mb-6 text-slate-900">ITの知識が全くなくても大丈夫でしょうか？</p>
+                  <p class="font-black text-xl mb-6 text-slate-900">フリーランスとの違いは何ですか？</p>
                   <div class="flex gap-6">
-                    <div class="w-12 h-12 bg-white border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
+                    <div class="w-12 h-12 bg-slate-100 border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
                       A
                     </div>
-                    <p class="text-slate-600 leading-relaxed font-medium pt-2">もちろんです。弊社のコンセプトは「IT事務局」です。難しい専門用語を使わず、設定から操作レクチャーまで伴走いたしますので、普段スマホを使っている程度で十分運用可能です。</p>
+                    <p class="text-slate-600 leading-relaxed font-medium pt-2">フリーランスは属人化リスク（担当者の退職・病気等）がありますが、MOGは会社組織として専任チームで対応します。また、フリーランスでは提供が難しい「従業員30人まで定額」「チャットサポート無制限」といった手厚いサポート体制を実現しています。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-200 hover:bg-slate-50 hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
+              <div class="flex gap-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-2xl flex items-center justify-center shrink-0 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">
+                  Q
+                </div>
+                <div class="flex-1">
+                  <p class="font-black text-xl mb-6 text-slate-900">大手ITベンダーとの違いは何ですか？</p>
+                  <div class="flex gap-6">
+                    <div class="w-12 h-12 bg-slate-100 border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
+                      A
+                    </div>
+                    <p class="text-slate-600 leading-relaxed font-medium pt-2">大手は大企業向けのため、小規模事業者には過剰機能が多く価格も高額（月額3〜5万円〜）。また、納期も2〜3ヶ月かかります。MOGは小規模事業者専門なので、本当に必要な機能だけを月額9,800円〜、最短2週間で提供できます。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="group bg-white p-10 rounded-3xl border-2 border-slate-200 hover:bg-slate-50 hover:border-cyan-400 hover:shadow-xl transition-all duration-500">
+              <div class="flex gap-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-2xl flex items-center justify-center shrink-0 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">
+                  Q
+                </div>
+                <div class="flex-1">
+                  <p class="font-black text-xl mb-6 text-slate-900">30人を超えた場合はどうなりますか？</p>
+                  <div class="flex gap-6">
+                    <div class="w-12 h-12 bg-slate-100 border-2 border-slate-200 text-slate-400 rounded-2xl flex items-center justify-center shrink-0 font-black text-xl group-hover:border-cyan-400 group-hover:text-cyan-600 transition-all">
+                      A
+                    </div>
+                    <p class="text-slate-600 leading-relaxed font-medium pt-2">従業員が30人を超えた場合は、上位プランへの移行をご案内いたします。ただし、MOGは小規模事業者専門のため、50人を超える場合は大手ITベンダーへのスムーズな移行をサポートいたします。成長に合わせた最適なご提案をお約束します。</p>
                   </div>
                 </div>
               </div>
@@ -354,31 +528,171 @@
           ホームへ戻る
         </button>
         
-        <div class="text-center max-w-3xl mx-auto">
-          <p class="text-cyan-400 font-black mb-5 tracking-[0.3em] uppercase text-sm">Efficiency Solutions</p>
-          <h1 class="text-5xl md:text-6xl font-black mb-10 leading-tight">
-            事務作業をゼロに。<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">まるっとDXパック</span>
-          </h1>
-          <p class="text-xl text-white/70 mb-12 leading-relaxed font-medium">
-            勤怠・給与・会計・請求・契約。これらをバラバラに管理していませんか？<br />
-            MOGのDXパックは、世界シェアの高いクラウドツールを組み合わせ、御社に最適な「自動化ライン」を構築します。
-          </p>
-          
-          <div class="grid grid-cols-2 gap-6 max-w-xl mx-auto mb-16">
-            <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all">
-              <p class="text-xs font-black text-cyan-400 mb-2 uppercase tracking-widest">Speed</p>
-              <p class="text-3xl font-black">最短2週間</p>
-            </div>
-            <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all">
-              <p class="text-xs font-black text-cyan-400 mb-2 uppercase tracking-widest">Efficiency</p>
-              <p class="text-3xl font-black">手作業90%減</p>
-            </div>
+        <div class="text-center max-w-4xl mx-auto mb-20">
+          <div class="inline-block bg-cyan-500/20 border border-cyan-500/30 backdrop-blur-sm text-cyan-400 text-sm font-black px-6 py-2 rounded-full mb-8 uppercase tracking-wider">
+            月額9,800円〜 / 初期費用5〜10万円
           </div>
           
-          <button onclick="scrollToSection('contact-form')" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-14 py-6 rounded-2xl font-black text-xl hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all duration-300">
+          <h1 class="text-5xl md:text-6xl font-black mb-10 leading-tight">
+            バックオフィスDX<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">「ラクチン事務局」</span>
+          </h1>
+          
+          <p class="text-xl text-white/80 mb-8 leading-relaxed font-medium">
+            勤怠・給与・経費・会計をまるごとDX化。<br />
+            <span class="text-cyan-400 font-black">従業員30人まで定額</span>で、<span class="text-cyan-400 font-black">チャットサポート無制限</span>。
+          </p>
+
+          <p class="text-lg text-white/60 leading-relaxed">
+            大手ITベンダーの<span class="font-black text-white">1/3〜1/5の価格</span>で、<br />
+            フリーランスにはない<span class="font-black text-white">組織的サポート体制</span>を実現。
+          </p>
+        </div>
+
+        <!-- Pricing Table -->
+        <div class="grid md:grid-cols-3 gap-8 mb-20">
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 rounded-3xl hover:bg-white/10 hover:border-cyan-400 transition-all duration-500">
+            <h3 class="text-2xl font-black mb-4 text-white">ライトプラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-cyan-400">9,800円</span>
+              <span class="text-sm text-white/50">/月</span>
+            </div>
+            <p class="text-xs text-white/50 mb-6">初期費用: 50,000円 / 納期: 2週間</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                勤怠管理システム
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                給与計算システム
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                経費精算システム
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                初期設定完全代行
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-white/10 border border-white/20 text-white px-6 py-4 rounded-2xl font-black hover:bg-white/20 transition-all">
+              無料相談する
+            </button>
+          </div>
+
+          <div class="relative bg-gradient-to-br from-cyan-500 to-blue-600 p-10 rounded-3xl shadow-2xl shadow-cyan-500/30 transform md:scale-105">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-slate-900 px-6 py-2 rounded-full text-xs font-black uppercase tracking-wider">
+              人気No.1
+            </div>
+            <h3 class="text-2xl font-black mb-4 text-white">スタンダードプラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-white">14,800円</span>
+              <span class="text-sm text-white/70">/月</span>
+            </div>
+            <p class="text-xs text-white/70 mb-6">初期費用: 80,000円 / 納期: 3週間</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-medium text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                ライトプランの全機能
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                会計システム連携
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                請求書発行・入金管理
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                毎月30分の無料相談
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-white text-blue-600 px-6 py-4 rounded-2xl font-black hover:bg-slate-50 transition-all shadow-xl">
+              このプランで相談する
+            </button>
+          </div>
+
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 rounded-3xl hover:bg-white/10 hover:border-purple-400 transition-all duration-500">
+            <h3 class="text-2xl font-black mb-4 text-white">プレミアムプラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-purple-400">19,800円</span>
+              <span class="text-sm text-white/50">/月</span>
+            </div>
+            <p class="text-xs text-white/50 mb-6">初期費用: 100,000円 / 納期: 3〜4週間</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                スタンダードの全機能
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                電子契約システム
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                年末調整フルサポート
+              </div>
+              <div class="flex items-start gap-3 text-sm font-medium text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                優先サポート対応
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-white/10 border border-white/20 text-white px-6 py-4 rounded-2xl font-black hover:bg-white/20 transition-all">
+              無料相談する
+            </button>
+          </div>
+        </div>
+
+        <!-- Benefits -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 md:p-16">
+          <h3 class="text-3xl font-black mb-12 text-center text-white">全プラン共通特典</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-cyan-500 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-white">従業員30人まで定額</h4>
+                <p class="text-white/70 font-medium">人数による追加料金は一切なし。成長しても安心の価格体系。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-cyan-500 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-white">チャットサポート無制限</h4>
+                <p class="text-white/70 font-medium">平日9〜17時、回数制限なしで何度でも質問OK。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-cyan-500 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-white">初期設定完全代行</h4>
+                <p class="text-white/70 font-medium">面倒な初期設定は全てお任せ。すぐに使い始められます。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-cyan-500 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-white">毎月30分の無料オンライン相談</h4>
+                <p class="text-white/70 font-medium">運用上の疑問や改善提案など、定期的にサポート。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-16">
+          <button onclick="scrollToSection('contact-form')" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:shadow-[0_0_50px_rgba(34,211,238,0.7)] transition-all duration-300">
             無料で業務診断を受ける
           </button>
+          <p class="text-white/60 mt-6 text-sm">所要時間30分 / オンライン対応 / 強引な営業は一切ありません</p>
         </div>
       </div>
     </div>
@@ -393,20 +707,168 @@
           ホームへ戻る
         </button>
         
-        <div class="text-center max-w-3xl mx-auto">
-          <p class="text-cyan-600 font-black mb-5 tracking-[0.3em] uppercase text-sm">Digital Presence</p>
-          <h1 class="text-5xl md:text-6xl font-black text-slate-900 mb-10 leading-tight">
-            「働く名刺」を、<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">あなたの会社に。</span>
-          </h1>
-          <p class="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
-            「とりあえずHPはあるけど、何も生まれていない」そんな状況を打破します。<br />
-            Googleマップ対策（MEO）や検索対策（SEO）を標準装備。24時間働き続ける営業マンを作ります。
-          </p>
+        <div class="text-center max-w-4xl mx-auto mb-20">
+          <div class="inline-block bg-blue-50 border border-blue-200 text-blue-600 text-sm font-black px-6 py-2 rounded-full mb-8 uppercase tracking-wider">
+            148,000円〜 / 最短10営業日納品
+          </div>
           
-          <button onclick="scrollToSection('contact-form')" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-14 py-6 rounded-2xl font-black text-xl hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all duration-300">
-            無料相談する
+          <h1 class="text-5xl md:text-6xl font-black text-slate-900 mb-10 leading-tight">
+            ホームページ制作<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">「すぐホームページ」</span>
+          </h1>
+          
+          <p class="text-xl text-slate-700 mb-8 leading-relaxed font-bold">
+            業界最安級・最速納品。<br />
+            <span class="text-blue-600">静的サイト生成で爆速＆セキュア</span>なホームページを<span class="text-blue-600">10営業日</span>で。
+          </p>
+
+          <p class="text-lg text-slate-600 leading-relaxed">
+            WordPressの<span class="font-black text-slate-900">セキュリティリスクを排除</span>し、<br />
+            <span class="font-black text-slate-900">サーバー・ドメイン永年無料</span>で提供。
+          </p>
+        </div>
+
+        <!-- Pricing Table -->
+        <div class="grid md:grid-cols-3 gap-8 mb-20">
+          <div class="bg-slate-50 border-2 border-slate-200 p-10 rounded-3xl hover:border-cyan-400 hover:shadow-2xl transition-all duration-500">
+            <h3 class="text-2xl font-black mb-4 text-slate-900">シンプルプラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-cyan-600">148,000円</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-6">納期: 10営業日 / 5ページ</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                スマホ完全対応
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                SEO初期対策
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                Googleマップ埋込
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                お問い合わせフォーム
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-slate-200 text-slate-700 px-6 py-4 rounded-2xl font-black hover:bg-slate-300 transition-all">
+              無料相談する
+            </button>
+          </div>
+
+          <div class="relative bg-gradient-to-br from-blue-600 to-purple-600 p-10 rounded-3xl shadow-2xl shadow-blue-300 transform md:scale-105">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-slate-900 px-6 py-2 rounded-full text-xs font-black uppercase tracking-wider">
+              人気No.1
+            </div>
+            <h3 class="text-2xl font-black mb-4 text-white">スタンダードプラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-white">248,000円</span>
+            </div>
+            <p class="text-xs text-white/80 mb-6">納期: 3週間 / 10ページ</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-bold text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                シンプルプランの全機能
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                ブログ機能
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                Instagram連携
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                予約システム（選択可）
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-white text-blue-600 px-6 py-4 rounded-2xl font-black hover:bg-slate-50 transition-all shadow-xl">
+              このプランで相談する
+            </button>
+          </div>
+
+          <div class="bg-slate-50 border-2 border-slate-200 p-10 rounded-3xl hover:border-purple-400 hover:shadow-2xl transition-all duration-500">
+            <h3 class="text-2xl font-black mb-4 text-slate-900">集客特化プラン</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-5xl font-black text-purple-600">398,000円</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-6">納期: 4週間 / 15ページ</p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                スタンダードの全機能
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                MEO対策強化
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                アクセス解析設定
+              </div>
+              <div class="flex items-start gap-3 text-sm font-bold text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600 shrink-0 mt-0.5"><path d="M20 6 9 17l-5-5"/></svg>
+                初月Google広告運用代行
+              </div>
+            </div>
+            <button onclick="scrollToSection('contact-form')" class="w-full bg-slate-200 text-slate-700 px-6 py-4 rounded-2xl font-black hover:bg-slate-300 transition-all">
+              無料相談する
+            </button>
+          </div>
+        </div>
+
+        <!-- Benefits -->
+        <div class="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-blue-100 rounded-[3rem] p-12 md:p-16">
+          <h3 class="text-3xl font-black mb-12 text-center text-slate-900">全プラン共通特典</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-slate-900">サーバー・ドメイン永年無料</h4>
+                <p class="text-slate-600 font-medium">当社指定のサーバー・ドメインが無料。維持費の心配なし。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-slate-900">納品後3ヶ月間修正無制限</h4>
+                <p class="text-slate-600 font-medium">細かい修正も何度でもOK。納得いくまで調整できます。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-slate-900">静的サイト生成で爆速・セキュア</h4>
+                <p class="text-slate-600 font-medium">WordPressのセキュリティリスクを排除し、表示速度も最速クラス。</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black mb-2 text-slate-900">写真撮影オプション+50,000円</h4>
+                <p class="text-slate-600 font-medium">宮城・宮城近郊なら出張撮影可能（プロカメラマン）。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-16">
+          <button onclick="scrollToSection('contact-form')" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:shadow-[0_0_50px_rgba(34,211,238,0.7)] transition-all duration-300">
+            無料で制作相談をする
           </button>
+          <p class="text-slate-600 mt-6 text-sm">所要時間30分 / オンライン対応 / 強引な営業は一切ありません</p>
         </div>
       </div>
     </div>
@@ -432,7 +894,7 @@
           
           <h2 class="text-4xl font-black mb-10 leading-tight">
             小さな会社の、<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">IT事務局になりたい。</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">大きな味方。</span>
           </h2>
           
           <div class="space-y-6">
@@ -480,7 +942,7 @@
       </div>
       
       <div class="mt-20 pt-8 border-t border-white/10 text-white/40 text-xs flex flex-col md:flex-row justify-between items-center gap-4">
-        <p>&copy; 2026 合同会社MOG All rights reserved. 静岡県から全国へ。</p>
+        <p>&copy; 2026 合同会社MOG All rights reserved. 宮城県から全国へ。</p>
         <div class="flex gap-6">
           <button class="hover:text-cyan-400 transition-colors">プライバシーポリシー</button>
           <button class="hover:text-cyan-400 transition-colors">特定商取引法に基づく表記</button>
@@ -490,7 +952,6 @@
   </footer>
 
   <script>
-    // Page navigation
     function showPage(pageName) {
       document.querySelectorAll('.page-content').forEach(page => {
         page.classList.remove('active');
@@ -499,7 +960,6 @@
       window.scrollTo(0, 0);
     }
 
-    // Scroll to section
     function scrollToSection(sectionId) {
       const currentPage = document.querySelector('.page-content.active').id;
       
@@ -529,7 +989,6 @@
       }
     }
 
-    // Toggle mobile menu
     function toggleMenu() {
       const menu = document.getElementById('mobile-menu');
       const menuIcon = document.getElementById('menu-icon');
@@ -540,7 +999,6 @@
       closeIcon.classList.toggle('hidden');
     }
 
-    // Navbar scroll effect
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
